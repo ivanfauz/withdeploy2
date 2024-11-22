@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roshadi Perfume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="powerofkepepet.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h1>Roshadi Perfume</h1>
+            <nav class="nav">
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#products">Produk</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#parfum1">parfum1</a></li>
+                            <li><a href="#parfum2">parfum2</a></li>
+                            <li><a href="#parfum3">parfum3</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#about">Tentang</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h2 class="hero-heading">Aroma yang Menyempurnakan Harimu</h2>
+                <p>Kami menghadirkan koleksi parfum terbaik untuk pria dan wanita.</p>
+                <a href="#products" class="cta-button">Lihat Produk</a>
+            </div>
+        </section>
+
+  
+        <section id="about" class="about">
+            <div class="container">
+                <h2>Tentang Kami</h2>
+                <p>Roshadi Perfume adalah merek parfum premium yang menggabungkan bahan berkualitas dengan keahlian seni pembuatan parfum.
+                   Kami derdedikasi membuat parfum sepenuh hati dengan teknologi modern dan dikerjakan oleh orang-orang yang bersetifikat.
+                </p>
+                <img src="about-us.jpg" alt="Gambar Parfum" class="about-image">
+            </div>
+        </section>
+
+       
+        <section id="products" class="products">
+            <div class="container">
+                <h2>Koleksi Produk</h2>
+                <div class="product-list">
+                    <article class="product-card" id="floral">
+                        <img src="parfum1.jpg" alt="Parfum 1">
+                        <h3>Parfum 1</h3>
+                        <p>Aroma bunga yang lembut dan elegan.</p>
+                        <p class="price">Rp 350,000</p>
+                    </article>
+                    <article class="product-card" id="woody">
+                        <img src="parfum2.jpg" alt="Parfum 2">
+                        <h3>Parfum 2</h3>
+                        <p>Aroma maskulin dengan sentuhan kayu cendana.</p>
+                        <p class="price">Rp 400,000</p>
+                    </article>
+                    <article class="product-card" id="citrus">
+                        <img src="parfum3.png" alt="Parfum 3">
+                        <h3>Parfum 3</h3>
+                        <p>Aroma segar yang cocok untuk aktivitas harian.</p>
+                        <p class="price">Rp 300,000</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Hubungi Kami</h2>
+                <form action="#" method="POST" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nama</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Pesan</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Kirim</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Milestone 2024 Roshadi Perfume. Semua Hak tidak Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
