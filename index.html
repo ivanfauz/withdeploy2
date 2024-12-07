@@ -36,227 +36,159 @@
         <div>
             #!/bin/bash
 
-user="root"
-pass="Kuliahsqladi34"
-database="Budidaya_Tanaman"
+# Konfigurasi Database
+DB_HOST="localhost"
+DB_USER="root"
+DB_PASS="password_mysql"
+DB_NAME="budidaya_tanaman"
 
-function cek_koneksi() {
-    mysql -u "$user" -p"$pass" -e "USE $database;" &> /dev/null
-    if [ $? -eq 0 ]; then
-        echo "Koneksi berhasil"
-    else
-        echo "Koneksi gagal"
-        exit 1
-    fi
+# Fungsi untuk membuat database dan tabel
+setup_database() {
+    mysql -u $DB_USER -p$DB_PASS -e "
+    CREATE DATABASE IF NOT EXISTS $DB_NAME;
+    USE $DB_NAME;
+
+    CREATE TABLE IF NOT EXISTS penanam (
+        ID_Penanam INT AUTO_INCREMENT PRIMARY KEY,
+        Nama_Penanam VARCHAR(255) NOT NULL,
+        Alamat VARCHAR(255),
+        Kontak VARCHAR(20)
+    );
+
+    CREATE TABLE IF NOT EXISTS tanaman (
+        ID_Tanaman INT AUTO_INCREMENT PRIMARY KEY,
+        Nama_Tanaman VARCHAR(255) NOT NULL,
+        Status_Tanaman VARCHAR(50),
+        Tanggal_Penanaman DATE,
+        Jenis_Tanaman VARCHAR(100)
+    );
+
+    CREATE TABLE IF NOT EXISTS lokasi (
+        ID_Lokasi INT AUTO_INCREMENT PRIMARY KEY,
+        ID_Tanaman INT,
+        Kota VARCHAR(100),
+        Nama_Lokasi VARCHAR(255),
+        Jumlah_Tanaman INT,
+        FOREIGN KEY (ID_Tanaman) REFERENCES tanaman(ID_Tanaman)
+    );
+
+    CREATE TABLE IF NOT EXISTS sertifikat (
+        No_Sertifikat INT AUTO_INCREMENT PRIMARY KEY,
+        ID_Tanaman INT,
+        ID_Penanam INT,
+        ID_Lokasi INT,
+        Jenis_Sertifikat VARCHAR(100),
+        Tanggal_Terbit DATE,
+        FOREIGN KEY (ID_Tanaman) REFERENCES tanaman(ID_Tanaman),
+        FOREIGN KEY (ID_Penanam) REFERENCES penanam(ID_Penanam),
+        FOREIGN KEY (ID_Lokasi) REFERENCES lokasi(ID_Lokasi)
+    );
+    "
+    echo "Database dan tabel berhasil dibuat."
 }
 
-function pil_tanaman() {
-    while true; do
-        echo "Menu Tabel Tanaman"
-        echo "1. Tampilkan isi tabel"
-        echo "2. Tambah data tanaman"
-        echo "3. Hapus data tanaman"
-        echo "4. Kembali ke menu utama"
-        echo -n "Pilih menu: "
-        read pilih
-        case $pilih in
+# Fungsi untuk menambahkan data
+insert_data() {
+    echo "Pilih tabel untuk menambahkan data:"
+    echo "1. Penanam"
+    echo "2. Tanaman"
+    echo "3. Lokasi"
+    echo "4. Sertifikat"
+    read -p "Pilihan Anda: " choice
+
+    case $choice in
         1)
-            mysql -u "$user" -p"$pass" -D "$database" -e "SELECT * FROM Tanaman;"
+            read -p "Masukkan Nama Penanam: " nama_penanam
+            read -p "Masukkan Alamat: " alamat
+            read -p "Masukkan Kontak: " kontak
+            mysql -u $DB_USER -p$DB_PASS $DB_NAME -e "INSERT INTO penanam (Nama_Penanam, Alamat, Kontak) VALUES ('$nama_penanam', '$alamat', '$kontak');"
+            echo "Data penanam berhasil ditambahkan."
             ;;
         2)
-            echo "Masukkan ID Tanaman:"
-            read idtanaman
-            echo "Masukkan Nama Tanaman:"
-            read namatanaman
-            echo "Masukkan Status Tanaman:"
-            read statustanaman
-            echo "Masukkan Jenis Tanaman:"
-            read jenistanaman
-            echo "Masukkan Tanggal Penanaman (YYYY-MM-DD):"
-            read tanggalpenanaman
-            mysql -u "$user" -p"$pass" -D "$database" -e \
-                "INSERT INTO Tanaman (ID_Tanaman, Nama_Tanaman, Status_Tanaman, Jenis_Tanaman, Tanggal_Penanaman) VALUES ('$idtanaman', '$namatanaman', '$statustanaman', '$jenistanaman', '$tanggalpenanaman');"
-            echo "Data berhasil ditambah"
+            read -p "Masukkan Nama Tanaman: " nama_tanaman
+            read -p "Masukkan Status Tanaman: " status_tanaman
+            read -p "Masukkan Tanggal Penanaman (YYYY-MM-DD): " tanggal_penanaman
+            read -p "Masukkan Jenis Tanaman: " jenis_tanaman
+            mysql -u $DB_USER -p$DB_PASS $DB_NAME -e "INSERT INTO tanaman (Nama_Tanaman, Status_Tanaman, Tanggal_Penanaman, Jenis_Tanaman) VALUES ('$nama_tanaman', '$status_tanaman', '$tanggal_penanaman', '$jenis_tanaman');"
+            echo "Data tanaman berhasil ditambahkan."
             ;;
         3)
-            echo "Masukkan ID Tanaman yang akan dihapus:"
-            read hapustanaman
-            mysql -u "$user" -p"$pass" -D "$database" -e "DELETE FROM Tanaman WHERE ID_Tanaman='$hapustanaman';"
-            echo "Data berhasil dihapus"
+            read -p "Masukkan ID Tanaman: " id_tanaman
+            read -p "Masukkan Kota: " kota
+            read -p "Masukkan Nama Lokasi: " nama_lokasi
+            read -p "Masukkan Jumlah Tanaman: " jumlah_tanaman
+            mysql -u $DB_USER -p$DB_PASS $DB_NAME -e "INSERT INTO lokasi (ID_Tanaman, Kota, Nama_Lokasi, Jumlah_Tanaman) VALUES ($id_tanaman, '$kota', '$nama_lokasi', $jumlah_tanaman);"
+            echo "Data lokasi berhasil ditambahkan."
             ;;
         4)
-            break
+            read -p "Masukkan ID Tanaman: " id_tanaman
+            read -p "Masukkan ID Penanam: " id_penanam
+            read -p "Masukkan ID Lokasi: " id_lokasi
+            read -p "Masukkan Jenis Sertifikat: " jenis_sertifikat
+            read -p "Masukkan Tanggal Terbit (YYYY-MM-DD): " tanggal_terbit
+            mysql -u $DB_USER -p$DB_PASS $DB_NAME -e "INSERT INTO sertifikat (ID_Tanaman, ID_Penanam, ID_Lokasi, Jenis_Sertifikat, Tanggal_Terbit) VALUES ($id_tanaman, $id_penanam, $id_lokasi, '$jenis_sertifikat', '$tanggal_terbit');"
+            echo "Data sertifikat berhasil ditambahkan."
             ;;
         *)
-            echo "Pilihan salah"
+            echo "Pilihan tidak valid."
             ;;
-        esac
-    done
+    esac
 }
 
-function pil_lokasi() {
-    while true; do
-        echo "Menu Tabel Lokasi"
-        echo "1. Tampilkan isi tabel"
-        echo "2. Tambah data lokasi"
-        echo "3. Hapus data lokasi"
-        echo "4. Kembali ke menu utama"
-        echo -n "Pilih menu: "
-        read pilih
-        case $pilih in
+# Fungsi untuk menampilkan data
+view_data() {
+    echo "Pilih tabel untuk ditampilkan:"
+    echo "1. Penanam"
+    echo "2. Tanaman"
+    echo "3. Lokasi"
+    echo "4. Sertifikat"
+    read -p "Pilihan Anda: " choice
+
+    case $choice in
         1)
-            mysql -u "$user" -p"$pass" -D "$database" -e "SELECT * FROM Lokasi;"
+            mysql -u $DB_USER -p$DB_PASS $DB_NAME -e "SELECT * FROM penanam;"
             ;;
         2)
-            echo "Masukkan ID Lokasi:"
-            read idlokasi
-            echo "Masukkan ID Tanaman:"
-            read idtanaman
-            echo "Masukkan Nama Lokasi:"
-            read namalokasi
-            echo "Masukkan Jumlah Tanaman:"
-            read jumlahtanaman
-            echo "Masukkan Kota:"
-            read kota
-            mysql -u "$user" -p"$pass" -D "$database" -e \
-                "INSERT INTO Lokasi (ID_Lokasi, ID_Tanaman, Nama_Lokasi, Jumlah_Tanaman, Kota) VALUES ('$idlokasi', '$idtanaman', '$namalokasi', '$jumlahtanaman', '$kota');"
-            echo "Data berhasil ditambah"
+            mysql -u $DB_USER -p$DB_PASS $DB_NAME -e "SELECT * FROM tanaman;"
             ;;
         3)
-            echo "Masukkan ID Lokasi yang akan dihapus:"
-            read hapuslokasi
-            mysql -u "$user" -p"$pass" -D "$database" -e "DELETE FROM Lokasi WHERE ID_Lokasi='$hapuslokasi';"
-            echo "Data berhasil dihapus"
+            mysql -u $DB_USER -p$DB_PASS $DB_NAME -e "SELECT * FROM lokasi;"
             ;;
         4)
-            break
+            mysql -u $DB_USER -p$DB_PASS $DB_NAME -e "SELECT * FROM sertifikat;"
             ;;
         *)
-            echo "Pilihan salah"
+            echo "Pilihan tidak valid."
             ;;
-        esac
-    done
+    esac
 }
 
-function pil_penanam() {
-    while true; do
-        echo "Menu Tabel Penanam"
-        echo "1. Tampilkan isi tabel"
-        echo "2. Tambah data penanam"
-        echo "3. Hapus data penanam"
-        echo "4. Kembali ke menu utama"
-        echo -n "Pilih menu: "
-        read pilih
-        case $pilih in
-        1)
-            mysql -u "$user" -p"$pass" -D "$database" -e "SELECT * FROM Penanam;"
-            ;;
-        2)
-            echo "Masukkan ID Penanam:"
-            read idpenanam
-            echo "Masukkan Nama:"
-            read nama
-            echo "Masukkan Alamat:"
-            read alamat
-            echo "Masukkan Kontak:"
-            read kontak
-            mysql -u "$user" -p"$pass" -D "$database" -e \
-                "INSERT INTO Penanam (ID_Penanam, Nama, Alamat, Kontak) VALUES ('$idpenanam', '$nama', '$alamat', '$kontak');"
-            echo "Data berhasil ditambah"
-            ;;
-        3)
-            echo "Masukkan ID Penanam yang akan dihapus:"
-            read hapuspenanam
-            mysql -u "$user" -p"$pass" -D "$database" -e "DELETE FROM Penanam WHERE ID_Penanam='$hapuspenanam';"
-            echo "Data berhasil dihapus"
-            ;;
-        4)
-            break
-            ;;
-        *)
-            echo "Pilihan salah"
-            ;;
-        esac
-    done
-}
-
-function pil_sertifikat() {
-    while true; do
-        echo "Menu Tabel Sertifikat"
-        echo "1. Tampilkan isi tabel"
-        echo "2. Tambah data sertifikat"
-        echo "3. Hapus data sertifikat"
-        echo "4. Kembali ke menu utama"
-        echo -n "Pilih menu: "
-        read pilih
-        case $pilih in
-        1)
-            mysql -u "$user" -p"$pass" -D "$database" -e "SELECT * FROM Sertifikat;"
-            ;;
-        2)
-            echo "Masukkan No Sertifikat:"
-            read nosertifikat
-            echo "Masukkan ID Lokasi:"
-            read idlokasi
-            echo "Masukkan ID Tanaman:"
-            read idtanaman
-            echo "Masukkan ID Penanam:"
-            read idpenanam
-            echo "Masukkan Jenis Sertifikat:"
-            read jenissertifikat
-            echo "Masukkan Tanggal Terbit (YYYY-MM-DD):"
-            read tanggalterbit
-            mysql -u "$user" -p"$pass" -D "$database" -e \
-                "INSERT INTO Sertifikat (No_Sertifikat, ID_Lokasi, ID_Tanaman, ID_Penanam, Jenis_Sertifikat, Tanggal_Terbit) VALUES ('$nosertifikat', '$idlokasi', '$idtanaman', '$idpenanam', '$jenissertifikat', '$tanggalterbit');"
-            echo "Data berhasil ditambah"
-            ;;
-        3)
-            echo "Masukkan No Sertifikat yang akan dihapus:"
-            read hapussertifikat
-            mysql -u "$user" -p"$pass" -D "$database" -e "DELETE FROM Sertifikat WHERE No_Sertifikat='$hapussertifikat';"
-            echo "Data berhasil dihapus"
-            ;;
-        4)
-            break
-            ;;
-        *)
-            echo "Pilihan salah"
-            ;;
-        esac
-    done
-}
-
-cek_koneksi
-
+# Menu utama
 while true; do
-    echo "Menu Utama Sistem Budidaya Tanaman"
-    echo "1. Tabel Tanaman"
-    echo "2. Tabel Lokasi"
-    echo "3. Tabel Penanam"
-    echo "4. Tabel Sertifikat"
-    echo "5. Keluar"
-    echo -n "Pilih menu: "
-    read pilih
-    case $pilih in
-    1)
-        pil_tanaman
-        ;;
-    2)
-        pil_lokasi
-        ;;
-    3)
-        pil_penanam
-        ;;
-    4)
-        pil_sertifikat
-        ;;
-    5)
-        echo "Keluar dari program"
-        exit 0
-        ;;
-    *)
-        echo "Pilihan salah"
-        ;;
+    echo "=== Sistem Budidaya Tanaman ==="
+    echo "1. Setup Database"
+    echo "2. Tambah Data"
+    echo "3. Lihat Data"
+    echo "4. Keluar"
+    read -p "Pilihan Anda: " menu_choice
+
+    case $menu_choice in
+        1)
+            setup_database
+            ;;
+        2)
+            insert_data
+            ;;
+        3)
+            view_data
+            ;;
+        4)
+            echo "Keluar dari program."
+            exit 0
+            ;;
+        *)
+            echo "Pilihan tidak valid."
+            ;;
     esac
 done
 
