@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Qizzy Auction</title>
+    <link rel="icon" type="img/logo.png" href="img/logo.png">
+    <style>
+        /* Styling untuk halaman login */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container untuk form login */
+        .login-container {
+            background-color: #fff;
+            width: 300px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Input dan tombol dalam form */
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Link untuk kembali ke halaman utama */
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Container untuk form login -->
+    <div class="login-container">
+        <h2>Masuk ke Qizzy Auction</h2>
+        <form action="login.php" method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Kata Sandi" required>
+            <button type="submit" class="login-button">Masuk</button>
+        </form>
+        <a href="home.html" class="back-link">Kembali ke Beranda</a>
+    </div>
+
+</body>
+
+</html>

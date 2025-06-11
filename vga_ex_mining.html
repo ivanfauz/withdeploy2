@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qizzy Auction</title>
+    <link rel="icon" type="img/logo.png" href="img/logo.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Style untuk layout utama */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        /* Style untuk sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: #343a40;
+            padding: 20px;
+            width: 60px;
+            transition: width 0.3s ease;
+            overflow: hidden;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            color: #fff;
+        }
+
+        .sidebar:hover {
+            width: 200px;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            background-color: #495057;
+            border-radius: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #6c757d;
+        }
+
+        .short-vga {
+            display: inline;
+        }
+
+        .full-text {
+            display: none;
+        }
+
+        .sidebar:hover .full-text {
+            display: inline;
+        }
+
+        .sidebar:hover .short-vga {
+            display: none;
+        }
+
+        /* Style untuk konten utama */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #f8f9fa;
+            margin-left: 60px;
+            transition: margin-left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar:hover~.main-content {
+            margin-left: 200px;
+        }
+
+        /* Gaya untuk profil pengguna */
+        .user-profile {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        #profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .user-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            width: 150px;
+            z-index: 10;
+        }
+
+        .user-menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #343a40;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .user-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Style untuk card barang lelang */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            /* Pusatkan item card */
+        }
+
+        .card {
+            background-color: #e5e5e5;
+            width: 300px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            max-height: 120px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .card p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            color: #fff;
+            background-color: #4a5f39;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .card {
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2><span class="short-vga">Qzy Act</span><span class="full-text"> Qizzy Auction</h2>
+        <ul>
+            <li><a href="barang_lelang.php"><span class="short-vga">Home</span><span class="full-text"> Home</span></a></li>
+            <li><a href="vga_second.html"><span class="short-vga">Scd</span><span class="full-text"> Second</span></a>
+            </li>
+            <li><a href="vga_ex_mining.html"><span class="short-vga">Ex</span><span class="full-text">
+                        Ex-Mining</span></a></li>
+            <li><a href="vga_baru.html"><span class="short-vga">Baru</span><span class="full-text"> Baru</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Konten Utama -->
+    <div class="main-content">
+        <h1>LIST VGA EX MINING</h1>
+        <div class="card-container">
+            <!-- Barang 1 -->
+            <div class="card">
+                <img src="img/gtx1070.jpg" alt="ASUS ROG STRIX RTX 4090 24GB">
+                <h3>EVGA P104 GTX 1070 8GB</h3>
+                <p>START : Rp.40.000.000</p>
+                <p>TIME : <span id="time-1" data-end-time="2024-12-18T23:59:59">5 hari 23 Jam</span></p>
+                <p>Bids Terakhir : <span id="last-bid-1">Rp.0</span></p>
+                <form action="submit_bid.php" method="POST">
+                    <input type="hidden" name="kategori" value="ex_mining">
+                    <input type="hidden" name="item_id" value="1">
+                    <input type="number" name="bid_amount" placeholder="Masukkan Bid" required>
+                    <button type="submit" class="btn">BIND NOW</button>
+                </form>
+            </div>
+    
+            <!-- Barang 2 -->
+            <div class="card">
+                <img src="img/gtx1660.jpg" alt="COLORFUL GeForce GTX 1650 4GB">
+                <h3>GALAX GTX 1660 Ti 6GB</h3>
+                <p>START : Rp.2.800.000</p>
+                <p>TIME : <span id="time-1" data-end-time="2024-12-16T23:59:59">2 hari 23 Jam</span></p>
+                <p>Bids Terakhir : <span id="last-bid-1">Rp.0</span></p>
+                <form action="submit_bid.php" method="POST">
+                    <input type="hidden" name="kategori" value="ex_mining">
+                    <input type="hidden" name="item_id" value="2">
+                    <input type="number" name="bid_amount" placeholder="Masukkan Bid" required>
+                    <button type="submit" class="btn">BIND NOW</button>
+                </form>
+            </div>
+    
+            <!-- Barang 3 -->
+            <div class="card">
+                <img src="img/rtx2060.jpg" alt="MSI GeForce GTX 1660 SUPER VENTUS XS OC 6GB">
+                <h3>PAKET MINING RIG 6VGA RTX 2060 12GB</h3>
+                <p>START : Rp.7.800.000</p>
+                <p>TIME : <span id="time-1" data-end-time="2024-12-24T23:59:59">10 hari 23 Jam</span></p>
+                <p>Bids Terakhir : <span id="last-bid-1">Rp.0</span></p>
+                <form action="submit_bid.php" method="POST">
+                    <input type="hidden" name="kategori" value="ex_mining">
+                    <input type="hidden" name="item_id" value="3">
+                    <input type="number" name="bid_amount" placeholder="Masukkan Bid" required>
+                    <button type="submit" class="btn">BIND NOW</button>
+                </form>
+            </div>
+    
+            <!-- Barang 4 -->
+            <div class="card">
+                <img src="img/rx6600.jpg" alt="ASUS TUF GAMING RTX 4070 12GB">
+                <h3>PAKET MINING RIG 6VGA 6600 XT 8GB</h3>
+                <p>START : Rp.12.000.000</p>
+                <p>TIME : <span id="time-1" data-end-time="2024-12-24T23:59:59">10 hari 23 Jam</span></p>
+                <p>Bids Terakhir : <span id="last-bid-1">Rp.0</span></p>
+                <form action="submit_bid.php" method="POST">
+                    <input type="hidden" name="kategori" value="ex_mining">
+                    <input type="hidden" name="item_id" value="4">
+                    <input type="number" name="bid_amount" placeholder="Masukkan Bid" required>
+                    <button type="submit" class="btn">BIND NOW</button>
+                </form>
+            </div>
+        </div>
+
+    <!-- Profil Pengguna -->
+    <div class="user-profile">
+        <img src="img/user.png" alt="Profile" id="profile-icon">
+        <div class="user-menu" id="user-menu">
+            <a href="edit_profile.php">Edit Profil</a>
+            <a href="#" id="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <script>
+        const profileIcon = document.getElementById('profile-icon');
+        const userMenu = document.getElementById('user-menu');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        profileIcon.addEventListener('click', function () {
+            userMenu.style.display = userMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!profileIcon.contains(event.target) && !userMenu.contains(event.target)) {
+                userMenu.style.display = 'none';
+            }
+        });
+
+        logoutBtn.addEventListener('click', function () {
+            alert("Kamu telah logout.");
+            window.location.href = 'home.html';
+        });
+
+                // Real-Time Countdown
+                    function startCountdown() {
+                        const timeElements = document.querySelectorAll('[id^="time-"]');
+
+                        timeElements.forEach((element) => {
+                            const endTime = new Date(element.dataset.endTime).getTime();
+
+                            function updateTimer() {
+                                const now = new Date().getTime();
+                                const distance = endTime - now;
+
+                                if (distance <= 0) {
+                                    element.innerText = "Waktu habis!";
+                                } else {
+                                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                    element.innerText = `${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
+                                }
+                            }
+
+                            updateTimer();
+                            setInterval(updateTimer, 1000);
+                        });
+                    }
+
+                    // Real-Time Bid Updates
+                    function updateLastBid() {
+                        fetch('fetch_last_bid.php')
+                            .then((response) => response.json())
+                            .then((data) => {
+                                data.forEach((item) => {
+                                    const lastBidElement = document.getElementById(`last-bid-${item.item_id}`);
+                                    if (lastBidElement) {
+                                        lastBidElement.innerText = `Rp.${item.bid_amount.toLocaleString()}`;
+                                    }
+                                });
+                            })
+                            .catch((error) => console.error('Error fetching last bid:', error));
+                    }
+
+                    // Jalankan Countdown dan Real-Time Bid Updates
+                    document.addEventListener('DOMContentLoaded', () => {
+                        startCountdown();
+                        setInterval(updateLastBid, 5000); // Update setiap 5 detik
+                    });
+    </script>
+</body>
+
+</html>
